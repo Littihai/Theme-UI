@@ -1,0 +1,21 @@
+# Line endings: LF in the repository and in every working copy, so Windows,
+# macOS and Linux machines produce identical files and clean diffs.
+* text=auto eol=lf
+
+# Windows-only scripts keep CRLF (cmd.exe misreads labels in LF batch files)
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.sln text eol=crlf
+
+# Binary assets — never convert or diff
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.pdf   binary
+*.zip   binary
+*.woff  binary
+*.woff2 binary

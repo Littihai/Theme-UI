@@ -1,0 +1,27 @@
+# Shared editor settings (https://editorconfig.org) — VS Code, Visual Studio and
+# Rider apply these automatically, so everyone saves files the same way.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# C#, SQL, Python and PowerShell use 4-space indents
+[*.{cs,sql,py,ps1}]
+indent_size = 4
+
+[*.{cmd,bat,ps1,sln}]
+end_of_line = crlf
+
+# Visual Studio project files: tabs with a UTF-8 BOM, as the IDE writes them
+[*.{csproj,pubxml}]
+charset = utf-8-bom
+indent_style = tab
+
+# Markdown uses two trailing spaces as a line break
+[*.md]
+trim_trailing_whitespace = false
