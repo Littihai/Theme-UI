@@ -4,7 +4,7 @@ A React + TypeScript starter for internal business applications: the application
 of the [Lotline](https://github.com/Littihai/TMCL-PR) platform, lifted out of that project so the next one starts here.
 Thai and English UI. No backend: the sign-in is an in-memory stand-in, the pages show sample data.
 
-Thai version: [README.th.md](README.th.md)
+Live demo: **https://littihai.github.io/Theme-UI/** (deployed from `main` by `.github/workflows/pages.yml`) · Thai version: [README.th.md](README.th.md)
 
 ## What is in the box
 

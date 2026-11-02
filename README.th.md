@@ -4,7 +4,7 @@
 [Lotline](https://github.com/Littihai/TMCL-PR) ที่แยกออกมาเพื่อให้โปรเจกต์ถัดไปเริ่มจากตรงนี้ได้เลย
 หน้าจอไทย/อังกฤษ ไม่มี backend: การเข้าสู่ระบบเป็นแบบจำลองในหน่วยความจำ และทุกหน้าแสดงข้อมูลตัวอย่าง
 
-English version: [README.md](README.md)
+ดูตัวอย่างสด: **https://littihai.github.io/Theme-UI/** (deploy จาก `main` โดย `.github/workflows/pages.yml`) · English version: [README.md](README.md)
 
 ## มีอะไรให้บ้าง
 
