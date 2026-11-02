@@ -70,6 +70,21 @@ The looks of the kit live here by class: `.btn` and its variants and sizes, `.bt
 toast stack (`.toast*`), the confirm dialog (`.dz-*`), the error card (`.err-*`), the skeleton shimmer, the option
 cards of Customize (`.opt-*`). A component sets layout inline (width, gap) and leaves colour and state to the class.
 
+## The colour-scheme switch
+
+`ThemeProvider.setPref(pref, origin)` swaps `data-theme` on `<html>`. Given an `origin` (the pressed button, from
+`clickOrigin(e)`), the new look is painted inside a circle that grows out of that point until it covers the window:
+`document.startViewTransition` snapshots the page, the tokens swap inside the callback, and the `::view-transition-new(root)`
+pseudo-element is animated with a `clip-path: circle()`; `global.css` turns the default cross-fade off. Browsers without
+the API, and people who chose reduced motion, get the plain swap.
+
+## Before sign-in
+
+`modules/landing` is the page at `/` for a visitor: `landing.css` holds its own classes (`.lp-*`, the `.rv` scroll
+reveal, `.tilt`), `Mini.tsx` the CSS illustrations, all on the tokens. The sign-in page has two layouts chosen by
+`BRAND.loginLayout` (`.auth-split` / `.auth-panel` for the brand panel, `.auth-page` for the centred card, both in
+`global.css`); `BRAND.stats` are the numbers on the panel and in the hero.
+
 ## Fonts
 
 Inter + Noto Sans Thai are bundled and loaded in `src/main.tsx`; IBM Plex Sans Thai and Sarabun are separate chunks

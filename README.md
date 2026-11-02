@@ -11,9 +11,10 @@ Thai version: [README.th.md](README.th.md)
 | Area | What you get |
 |---|---|
 | **Shell** | Top bar with a Linear-style mega menu, or a sidebar / icon rail (the person chooses); phone drawer; account menu; notification bell; Ctrl-K palette; the Settings window as a route (`/settings/<section>`); footer |
-| **Look** | Light / dark / system; nine accents; four typefaces (every one reads Thai); five grey bases; corner radius; page width; sticky bars; attached or floating edges; text size S/M/L; high contrast; reduced motion — all per device, applied before first paint (`public/theme-init.js`) |
+| **Look** | Light / dark / system (the switch spreads out of the button as a circle, View Transitions API); nine accents; four typefaces (every one reads Thai); five grey bases; corner radius; page width; sticky bars; attached or floating edges; text size S/M/L; high contrast; reduced motion — all per device, applied before first paint (`public/theme-init.js`) |
 | **UI kit** | Button, Badge, Switch, Tabs, Select (searchable, grouped, with tones), DateRange, Field / FormAlert / Dialog, Pager, sortable table headers, CSV export, BulkBar, ActiveFilters, Breadcrumb, PageHeader, StageCard / ActionBar, Timeline, Skeletons, EmptyState, ErrorState, InlineError (by failure kind), ComingSoon, Toast, confirm / reason dialogs, hand-drawn SVG charts |
 | **Plumbing** | `ApiResponse<T>` envelope + a fetch client with token refresh, offline / timeout detection and readable failures; auth and permission providers (`usePermissions().can("APP.MODULE.ACTION")`, `<RequireCan>`); bilingual dictionary with a CI check; Octicons only |
+| **Before sign-in** | A landing page (hero, a bento of what is inside, the four steps, the way in) with scroll reveals, tilting cards and a glass header; a sign-in page in two layouts (`BRAND.loginLayout`: a dark brand panel beside the card, or the card alone) |
 | **Demo pages** | Home (overview), Components (every piece), Tables (the complete list page), Charts, Document (stages + approval), Manual (this guide, in the app), Admin (a gated page) |
 
 ## Run it
@@ -68,7 +69,7 @@ src/hooks        focus trap, escape layer, scroll lock, hotkeys, anchored panels
 src/i18n         dict.ts (core), dict.appearance.ts, dict.demo.ts, errors.ts (HTTP failures)
 src/layouts      AppShell, Header, MegaMenu, NavBar (phone drawer), SideNav, PublicFrame, ApiStatusBar
 src/lib          appearance, fontSize, fonts, notify (toasts, confirm), notifications store, dates, csv, formDraft…
-src/modules      auth/, common/ (404, 403), home/, settings/, showcase/ (delete me)
+src/modules      auth/, common/ (404, 403), home/, landing/ (before sign-in), settings/, showcase/ (delete me)
 src/overlays     Toast, ConfirmDialog, CommandPalette, AccountMenu, NotificationsPanel, CustomizePanel
 src/services     apiClient.ts, authService.ts
 src/styles       tokens.css, global.css, ui.css, layout.css

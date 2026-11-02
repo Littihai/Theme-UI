@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { useUi } from "@/app/providers/UiProvider";
-import { useTheme } from "@/app/providers/ThemeProvider";
+import { clickOrigin, useTheme } from "@/app/providers/ThemeProvider";
 import { useI18n } from "@/app/providers/I18nProvider";
 import { useUnreadCount } from "@/lib/notifications";
 import { LangToggle } from "@/components/ui/LangToggle";
@@ -108,7 +108,7 @@ export function Header({ slim = false }: { slim?: boolean }) {
         )}
 
         <button
-          onClick={() => setPref(dark ? "light" : "dark")}
+          onClick={(e) => setPref(dark ? "light" : "dark", clickOrigin(e))}
           aria-label={t(dark ? "header.themeLight" : "header.themeDark")}
           title={t(dark ? "header.themeLight" : "header.themeDark")}
           className="btn-icon"

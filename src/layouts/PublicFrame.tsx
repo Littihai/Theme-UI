@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useI18n } from "@/app/providers/I18nProvider";
-import { useTheme } from "@/app/providers/ThemeProvider";
+import { clickOrigin, useTheme } from "@/app/providers/ThemeProvider";
 import { AppFooter } from "@/components/ui/AppFooter";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -34,7 +34,7 @@ export function PublicFrame({ children, maxWidth = 1180, nav: links, className, 
           <div style={{ flex: 1 }} />
           <LangToggle />
           <button
-            onClick={() => setPref(dark ? "light" : "dark")}
+            onClick={(e) => setPref(dark ? "light" : "dark", clickOrigin(e))}
             aria-label={t(dark ? "header.themeLight" : "header.themeDark")}
             title={t(dark ? "header.themeLight" : "header.themeDark")}
             className="btn-icon"

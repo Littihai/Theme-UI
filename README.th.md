@@ -11,9 +11,10 @@ English version: [README.md](README.md)
 | ส่วน | สิ่งที่ได้ |
 |---|---|
 | **Shell** | แถบบนพร้อมเมนูใหญ่แบบ Linear หรือแถบข้าง / แถบไอคอน (ผู้ใช้เลือกเอง); เมนูมือถือ; เมนูบัญชี; กระดิ่งแจ้งเตือน; Ctrl-K palette; หน้าต่าง Settings ที่เป็น route (`/settings/<section>`); ส่วนท้าย |
-| **หน้าตา** | สว่าง / มืด / ตามระบบ; สีหลัก 9 สี; ฟอนต์ 4 แบบ (อ่านไทยได้ทุกแบบ); โทนเทา 5 แบบ; มุมโค้ง; ความกว้างหน้า; แถบติดหน้าจอ; ขอบแนบหรือลอย; ขนาดตัวอักษร S/M/L; คอนทราสต์สูง; ลดการเคลื่อนไหว ทั้งหมดจำต่อเครื่องและใส่ก่อนวาดเฟรมแรก (`public/theme-init.js`) |
+| **หน้าตา** | สว่าง / มืด / ตามระบบ (ตอนสลับ สีใหม่ขยายเป็นวงกลมจากปุ่ม ด้วย View Transitions API); สีหลัก 9 สี; ฟอนต์ 4 แบบ (อ่านไทยได้ทุกแบบ); โทนเทา 5 แบบ; มุมโค้ง; ความกว้างหน้า; แถบติดหน้าจอ; ขอบแนบหรือลอย; ขนาดตัวอักษร S/M/L; คอนทราสต์สูง; ลดการเคลื่อนไหว ทั้งหมดจำต่อเครื่องและใส่ก่อนวาดเฟรมแรก (`public/theme-init.js`) |
 | **ชุด UI** | Button, Badge, Switch, Tabs, Select (ค้นหาได้ จัดกลุ่ม มีโทน), DateRange, Field / FormAlert / Dialog, Pager, หัวตารางเรียงได้, ส่งออก CSV, BulkBar, ActiveFilters, Breadcrumb, PageHeader, StageCard / ActionBar, Timeline, Skeleton, EmptyState, ErrorState, InlineError (ตามชนิดความล้มเหลว), ComingSoon, Toast, ไดอะล็อกยืนยัน/ขอเหตุผล, กราฟ SVG วาดเอง |
 | **ท่อส่ง** | ซอง `ApiResponse<T>` + fetch client ที่ต่ออายุ token เอง ตรวจ offline/timeout และแปลงความล้มเหลวเป็นข้อความอ่านได้; provider ของ auth และสิทธิ์ (`usePermissions().can("APP.MODULE.ACTION")`, `<RequireCan>`); พจนานุกรมสองภาษาพร้อมสคริปต์ตรวจใน CI; ไอคอน Octicons เท่านั้น |
+| **ก่อนเข้าสู่ระบบ** | Landing page (hero, bento ว่ามีอะไรบ้าง, 4 ขั้นเริ่มต้น, ทางเข้า) พร้อมเอฟเฟกต์เลื่อนเผย การ์ดเอียงตามเมาส์ และ header แบบกระจก; หน้า Login 2 แบบ (`BRAND.loginLayout`: แผงแบรนด์สีเข้มข้างการ์ด หรือการ์ดกลางจอ) |
 | **หน้าตัวอย่าง** | Home (ภาพรวม), Components (ทุกชิ้นส่วน), Tables (หน้ารายการครบชุด), Charts, Document (ขั้นตอน + อนุมัติ), Manual (คู่มือนี้ในแอป), Admin (หน้าที่ต้องมีสิทธิ์) |
 
 ## รัน
@@ -67,7 +68,7 @@ src/hooks        focus trap, escape layer, scroll lock, hotkeys, anchored panels
 src/i18n         dict.ts (แกน), dict.appearance.ts, dict.demo.ts, errors.ts (ข้อความ HTTP)
 src/layouts      AppShell, Header, MegaMenu, NavBar (เมนูมือถือ), SideNav, PublicFrame, ApiStatusBar
 src/lib          appearance, fontSize, fonts, notify (toast, confirm), notifications store, dates, csv, formDraft…
-src/modules      auth/, common/ (404, 403), home/, settings/, showcase/ (ลบได้)
+src/modules      auth/, common/ (404, 403), home/, landing/ (ก่อนเข้าสู่ระบบ), settings/, showcase/ (ลบได้)
 src/overlays     Toast, ConfirmDialog, CommandPalette, AccountMenu, NotificationsPanel, CustomizePanel
 src/services     apiClient.ts, authService.ts
 src/styles       tokens.css, global.css, ui.css, layout.css

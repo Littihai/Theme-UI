@@ -24,6 +24,8 @@ export const DEMO_DICT: Record<string, Entry> = {
   "nav.adminDesc": e("หน้าที่ต้องมีสิทธิ์ ADMIN.PANEL.VIEW", "A page gated on ADMIN.PANEL.VIEW"),
 
   // ── sign-in ──
+  "login.hint": e("ใส่ชื่อผู้ใช้และรหัสผ่านของคุณ", "Enter your user name and password"),
+  "login.supportLine": e("เข้าสู่ระบบไม่ได้? ติดต่อ", "Trouble signing in? Contact"),
   "login.username": e("ชื่อผู้ใช้", "User name"),
   "login.usernamePh": e("เช่น admin", "e.g. admin"),
   "login.invalid": e("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง", "The user name or password is not right."),

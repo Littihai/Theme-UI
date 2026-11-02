@@ -5,6 +5,7 @@
  */
 import { APPEARANCE_DICT } from "./dict.appearance";
 import { DEMO_DICT } from "./dict.demo";
+import { LANDING_DICT } from "./dict.landing";
 import { DEFAULT_LANG, storageKey } from "@/constants/brand";
 
 export type Lang = "th" | "en";
@@ -155,7 +156,7 @@ export const DICT: Record<string, Entry> = {
   // ── auth / login ──
   "login.signIn": { th: "เข้าสู่ระบบ", en: "Sign in" },
   "login.demoTitle": { th: "เข้าชมด้วยบัญชีตัวอย่าง", en: "Enter with a sample account" },
-  "login.demoHint": { th: "ข้อมูลสมมติทั้งหมด เลือกมุมมองที่อยากดู แล้วระบบพาเดินเส้นทางหลักให้", en: "All data is fictional. Pick a side to see; a short walk along the main path follows" },
+  "login.demoHint": { th: "ข้อมูลสมมติทั้งหมด กดเพื่อเข้าด้วยบัญชีนั้นโดยไม่ต้องพิมพ์รหัสผ่าน", en: "All data is fictional. Press one to enter as that account, no password typed" },
   "stage.open": { th: "เปิดดู", en: "Open" },
   "stage.fold": { th: "ยุบ", en: "Fold" },
   "login.password": { th: "รหัสผ่าน", en: "Password" },
@@ -240,4 +241,5 @@ export const DICT: Record<string, Entry> = {
 
   ...APPEARANCE_DICT,
   ...DEMO_DICT,
+  ...LANDING_DICT,
 };

@@ -193,6 +193,15 @@ input {
   transform: none;
 }
 
+.auth-title {
+  animation: rise-blur 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.05s both;
+}
+.auth-tagline {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s both;
+}
+.auth-stats {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.4s both;
+}
 .auth-card {
   animation: pop 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s both;
 }
@@ -251,6 +260,9 @@ input {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="full"]) .auth-title,
+  html:not([data-motion="full"]) .auth-tagline,
+  html:not([data-motion="full"]) .auth-stats,
   html:not([data-motion="full"]) .auth-card,
   html:not([data-motion="full"]) .fx-rise,
   html:not([data-motion="full"]) .app-offcanvas,
@@ -279,6 +291,9 @@ input {
   }
 }
 /* the same when the viewer chose "reduce motion" in Settings, whatever the system says */
+html[data-motion="reduce"] .auth-title,
+html[data-motion="reduce"] .auth-tagline,
+html[data-motion="reduce"] .auth-stats,
 html[data-motion="reduce"] .auth-card,
 html[data-motion="reduce"] .fx-rise,
 html[data-motion="reduce"] .app-offcanvas,
@@ -392,6 +407,136 @@ html[data-size="l"] {
   .auth-card {
     padding: 26px 20px;
   }
+}
+
+.auth-lang {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.auth-support {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--color-neutral-600);
+}
+
+/* ── sign-in screen, split: the brand panel beside the card; one column on a phone (BRAND.loginLayout = "split") ── */
+.auth-split {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: var(--vh100);
+  font-family: var(--font-body);
+  background: var(--color-bg);
+}
+.auth-panel {
+  background: var(--color-brand-deep);
+  color: var(--color-on-brand-deep);
+  padding: 56px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+.auth-panel .btn-icon:hover {
+  background: color-mix(in srgb, #fff 12%, transparent);
+}
+.auth-hero {
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.auth-title {
+  font-family: var(--font-heading);
+  font-size: 56px;
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.auth-tagline {
+  font-size: 17px;
+  opacity: 0.78;
+  line-height: 1.6;
+}
+.auth-stats {
+  display: flex;
+  gap: 32px;
+  margin: 16px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  flex-wrap: wrap;
+}
+.auth-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.auth-stats dd {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 30px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.auth-stats dt {
+  font-size: 12px;
+  opacity: 0.6;
+}
+.auth-copyright {
+  font-size: 12px;
+  opacity: 0.45;
+}
+.auth-main {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  align-items: center;
+  padding: 48px 56px 20px;
+  gap: 20px;
+}
+.auth-main .auth-stack {
+  max-width: 400px;
+}
+@media (max-width: 860px) {
+  .auth-split {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+  }
+  /* the brand panel shrinks to a header: logo, language, name and the tagline; no statistics */
+  .auth-panel {
+    padding: 20px 20px 24px;
+    gap: 14px;
+  }
+  .auth-hero {
+    gap: 8px;
+  }
+  .auth-title {
+    font-size: 30px;
+  }
+  .auth-tagline {
+    font-size: 14px;
+  }
+  .auth-stats,
+  .auth-copyright {
+    display: none;
+  }
+  .auth-main {
+    padding: 24px 16px 20px;
+    align-items: start;
+  }
+}
+
+/* ── the colour-scheme switch: the new look grows out of the button as a circle (ThemeProvider.setPref) ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
 }
 
 /* an announcement region (role="alert") has to exist even when it is empty — don't let it add a blank row to a form */

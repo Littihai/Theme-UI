@@ -15,6 +15,20 @@ export const BRAND = {
   company: "Your Company Co., Ltd.",
   /** one line under the brand in the footer and on the sign-in page: what the system is */
   tagline: { th: "แม่แบบหน้าจอสำหรับระบบภายในองค์กร", en: "A UI starter for internal business applications" },
+  /**
+   * the sign-in page: "split" is a dark brand panel (name, tagline, the numbers below) beside the card;
+   * "centered" is the card alone on a plain page
+   */
+  loginLayout: "split" as "split" | "centered",
+  /** the numbers on the split sign-in panel and the landing page (safe aggregates, never personal data) */
+  stats: [
+    { value: 30, labelKey: "stat.components" },
+    { value: 7, labelKey: "stat.patterns" },
+    { value: 9, labelKey: "stat.accents" },
+    { value: 2, labelKey: "stat.languages" },
+  ] as { value: number; labelKey: string }[],
+  /** what the landing page's "built with" row lists */
+  builtWith: ["React 19", "TypeScript", "Vite", "react-router", "Octicons", "CSS custom properties"],
 };
 
 /** localStorage keys: `${STORAGE_PREFIX}.<name>` (must match public/theme-init.js) */

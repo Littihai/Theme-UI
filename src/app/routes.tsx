@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { Suspense, lazy, useEffect, type ReactNode } from "react";
 import { Navigate, Route, Routes, useLocation, type Location } from "react-router-dom";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { usePermissions } from "@/app/providers/PermissionProvider";
@@ -6,6 +6,9 @@ import { finishBoot } from "@/lib/boot";
 import { safeReturnPath } from "@/lib/returnPath";
 import { AppShell } from "@/layouts/AppShell";
 import { LoginPage } from "@/modules/auth/LoginPage";
+
+// the landing page is its own chunk: only a visitor who has not signed in ever downloads it
+const LandingPage = lazy(() => import("@/modules/landing/LandingPage").then((m) => ({ default: m.LandingPage })));
 import { NotFoundPage } from "@/modules/common/NotFoundPage";
 import { ForbiddenPage } from "@/modules/common/ForbiddenPage";
 import { HomePage } from "@/modules/home/HomePage";
@@ -64,7 +67,14 @@ export function AppRoutes() {
     <RealLocationContext.Provider value={location}>
       <Routes location={pageLocation(location)}>
         <Route path="/login" element={<LoginRoute />} />
-        <Route element={<RequireAuth><AppShell /></RequireAuth>}>
+        <Route
+          element={
+            // "/" is the landing page for a visitor who has not signed in; every other page asks for a sign-in
+            !isAuthenticated && location.pathname === "/"
+              ? <Suspense fallback={<div style={{ minHeight: "var(--vh100)", background: "var(--color-bg)" }} />}><LandingPage /></Suspense>
+              : <RequireAuth><AppShell /></RequireAuth>
+          }
+        >
           <Route path="/" element={<HomePage />} />
           <Route path="/components" element={<ComponentsPage />} />
           <Route path="/components/:tab" element={<ComponentsPage />} />

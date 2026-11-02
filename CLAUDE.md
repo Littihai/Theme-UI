@@ -42,5 +42,6 @@ npm run build                # ตรวจ type + build
 - รายการเกิน 10 แถวต้องแบ่งหน้าด้วย `usePaged` + `Pager`; ปุ่ม primary หน้าละหนึ่ง; `danger` เฉพาะสิ่งที่ย้อนกลับไม่ได้;
   ความผิดพลาดที่ผู้ใช้ต้องแก้แสดงข้างช่อง (`Field error` / `FormAlert`) ไม่ใช่ toast
 - ชื่อผลิตภัณฑ์ โลโก้ และ prefix ของ localStorage อยู่ใน `src/constants/brand.ts` (prefix ต้องตรงกับ `public/theme-init.js`)
+- หน้า Login มี 2 แบบ เลือกที่ `BRAND.loginLayout`; หน้า Landing ก่อนเข้าสู่ระบบอยู่ใน `src/modules/landing` (CSS ของตัวเอง `landing.css`)
 - หน้าแบบรายการดู `src/modules/showcase/TablesPage.tsx`, หน้าเอกสารดู `DocumentPage.tsx`, หน้าภาพรวมดู `ChartsPage.tsx`
   โมดูล showcase ทั้งหมดลบได้เมื่อมีหน้าจริง
