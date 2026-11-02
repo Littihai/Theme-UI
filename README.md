@@ -6,6 +6,8 @@ Thai and English UI. No backend: the sign-in is an in-memory stand-in, the pages
 
 Live demo: **https://littihai.github.io/Theme-UI/** (deployed from `main` by `.github/workflows/pages.yml`) · Thai version: [README.th.md](README.th.md)
 
+[![The landing page of the live demo](docs/screenshot-landing.jpg)](https://littihai.github.io/Theme-UI/)
+
 ## What is in the box
 
 | Area | What you get |

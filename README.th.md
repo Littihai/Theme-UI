@@ -6,6 +6,8 @@
 
 ดูตัวอย่างสด: **https://littihai.github.io/Theme-UI/** (deploy จาก `main` โดย `.github/workflows/pages.yml`) · English version: [README.md](README.md)
 
+[![หน้า Landing ของตัวอย่างสด](docs/screenshot-landing.jpg)](https://littihai.github.io/Theme-UI/)
+
 ## มีอะไรให้บ้าง
 
 | ส่วน | สิ่งที่ได้ |
