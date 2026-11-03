@@ -1,13 +1,22 @@
-node_modules
-dist
-dist-ssr
-*.local
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.idea/
+.vscode/*
+!.vscode/extensions.json
+coverage/
+
+# per-machine values (see .env.example)
 .env
 .env.*
 !.env.example
-.vscode/*
-!.vscode/extensions.json
-.DS_Store
+*.local
 *.log
+.DS_Store
+
 # local agent / editor config
 .claude/

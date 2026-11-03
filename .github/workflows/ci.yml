@@ -1,29 +1,23 @@
-# Type check, dictionary check and production build on every pull request and every push to main.
+# Every push and pull request: the analyzer, the dictionary check, the tests, and a web build.
 name: CI
 
 on:
-  pull_request:
   push:
     branches: [main]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  pull_request:
 
 jobs:
-  build:
-    name: Type check + i18n check + production build
+  check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npx tsc --noEmit
-      - run: npm run check:i18n
-      - run: npm run build
+          channel: stable
+          flutter-version: 3.47.x
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze --fatal-infos
+      - run: dart run tool/check_i18n.dart
+      - run: flutter test
+      - run: flutter build web --release

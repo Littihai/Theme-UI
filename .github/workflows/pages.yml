@@ -1,6 +1,6 @@
 # Publishes the demo to GitHub Pages on every push to main: https://littihai.github.io/Theme-UI/
-# The app is built under the repository's path (VITE_BASE), and dist/404.html is a copy of index.html so a deep link
-# (/components, /login) still opens the app: Pages serves 404.html for unknown paths and the router takes over.
+# The app is built under the repository's path (--base-href) and build/web/404.html is a copy of index.html so a deep
+# link (/components, /login) still opens the app: Pages serves 404.html for unknown paths and the router takes over.
 name: Pages
 
 on:
@@ -21,19 +21,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-        env:
-          VITE_BASE: /Theme-UI/
-      - run: cp dist/index.html dist/404.html
+          channel: stable
+          flutter-version: 3.47.x
+          cache: true
+      - run: flutter pub get
+      - run: flutter build web --release --base-href /Theme-UI/
+      - run: cp build/web/index.html build/web/404.html
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: dist
+          path: build/web
 
   deploy:
     needs: build

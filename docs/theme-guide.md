@@ -1,97 +1,94 @@
 # Theme guide
 
-How the look is built, where to change it, and what every layout attribute does. Everything here is CSS and a few
-small TypeScript files; no component branches on the theme.
+How the look is built, where to change it, and what every Customize choice does. Everything here is a few small
+Dart files under `lib/theme`; no widget branches on the theme.
 
-## Tokens (`src/styles/tokens.css`)
+## Tokens (`lib/theme/tokens.dart`)
 
-Every colour, radius, shadow and type size is a custom property on `:root`. Components read them and never hold a hex
-value. The file has four kinds of block:
+Every colour, radius, shadow and type size is a field of `AppTokens`, a `ThemeExtension` a widget reads with
+`context.tokens`. A widget never holds a hex value. `AppTokens.build(...)` makes the tokens for one combination of the
+choices below; `lib/app/app.dart` calls it whenever a store changes and hands the result to `buildTheme` (which maps
+the tokens onto Material's `ThemeData` for the stock widgets: dialogs, menus, text fields, tooltips).
 
-| Block | What it sets |
+| Group | Fields |
 |---|---|
-| `:root, .theme-light` | the light palette: ground (`--color-bg`, `--color-surface`, `--color-text`), the neutral ramp 50–900, the accent ramp 100–900, the status tones (`--tone-ok/warn/stop-{fg,bg,solid}`), chart colours, shadows, radii, type sizes, the font stacks |
-| `html[data-theme="dark"], .theme-dark` | the same names with the dark values |
-| `html[data-accent="…"]` | the accent ramp of each of the nine accents (light and dark) |
-| `html[data-base="…"]` | the neutral ramp of each grey base (slate, gray, zinc, neutral, stone) |
+| ground | `bg`, `surface`, `text`, `accent`, `accent2`, `divider`, `onAccent`, `scrim`, `brandDeep` / `onBrandDeep` |
+| neutral ramp | `n50` … `n900` (`muted` = `n600`) |
+| accent ramp | `a100` … `a900` |
+| status tones | `warnFg/Bg/Solid`, `okFg/Bg/Solid`, `stopFg/Bg/Solid`, `danger`; `tone(StatusTone)` gives the three of one tone |
+| charts | `chart1` … `chart5` |
+| elevation | `shadowSm`, `shadowMd`, `shadowLg` |
+| corners | `radiusSm/Md/Lg/Xl` and the `rSm` … `rXl` `BorderRadius` |
+| frame | `pageMax` (the page width), `pagePad`, the type scale (`textXs` … `text3xl`), the control heights |
+| type | `fontFamily`, `fontFallback` |
 
-To retune the default look, edit the values in the first block. To add an accent, add a block for its light and dark
-ramps, add its id to `Accent` and `ACCENTS` in `src/lib/appearance.ts`, to the table in `public/theme-init.js`, and its
-name to `src/i18n/dict.ts` (`set.accent.<id>`).
+The dark palette mirrors the ramps rather than recolouring them: `n100` is still "the faintest tint above the
+surface" and `a700` is still "accent text", so a widget written against the light theme reads correctly in the dark one.
 
-`.theme-light` / `.theme-dark` as class names scope a subtree to one palette (the Customize previews use it; a printed
-document would too).
+To retune the default look, edit the constants in `tokens.dart` (`_lightBases`, `_darkBases`, `_lightTones`,
+`_darkTones`). To add an accent, add a value to `Accent` in `appearance.dart`, one line to `accentSeeds`, and its name
+to `dict_core.dart` (`set.accent.<id>`).
 
-## Customize (`src/lib/appearance.ts`, `public/theme-init.js`)
+## Customize (`lib/theme/appearance.dart`)
 
-Each choice is one attribute on `<html>`; a default has **no** attribute, so a cleared storage means exactly the
-stylesheet's own values.
+Each choice is one enum, remembered under `app.<name>` through `shared_preferences`; a default is never written, so a
+cleared storage means exactly the defaults.
 
-| Attribute | Values | Read by |
+| Choice | Values | Read by |
 |---|---|---|
-| `data-theme` | `dark` (absent = light) | tokens.css |
-| `data-accent` | steel · azure · teal · green · indigo · violet · rose · amber · slate | tokens.css |
-| `data-base` | slate · gray · zinc · neutral · stone | tokens.css |
-| `data-font` | inter · plex · sarabun · system | tokens.css (the font stacks); `src/lib/fonts.ts` loads the files on demand |
-| `data-radius` | none · sm · md · lg · xl | tokens.css (`--radius-*`) |
-| `data-contrast` | high | tokens.css |
-| `data-motion` | reduce · full (absent = follow the OS) | global.css, ui.css |
-| `data-size` | s · l (absent = medium) | global.css (`zoom` on `<html>`) |
-| `data-nav` | side · rail (absent = top bar) | layout.css, `AppShell` |
-| `data-container` | narrow · wide · fluid (absent = standard) | layout.css (`--page-max`) |
-| `data-sticky` | all · none (absent = the top bar only) | layout.css |
-| `data-nav-style` | floating (absent = attached) | layout.css |
-| `data-panel-style` | floating (absent = attached) | layout.css |
+| colour scheme (`ThemeStore`) | light · dark · system | `AppTokens.build(dark:)` |
+| `accent` | steel · azure · teal · green · indigo · violet · rose · amber · slate | the accent ramp |
+| `base` | slate · gray · zinc · neutral · stone | the neutral ramp, `bg`, `surface`, `text` |
+| `font` | inter · plex · sarabun · system | `fontFamily` (Plex and Sarabun are registered on demand by `fonts.dart`) |
+| `radius` | none · sm · md · lg · xl | the four radii |
+| `contrast` | standard · high | the text and the neutral ramp 200–900 |
+| `motion` | auto · reduce · full | `context.reducedMotion` (every animation checks it) |
+| text size (`FontSizeStore`) | s · m · l | the `MediaQuery` text scaler in `app.dart` |
+| `nav` | top · side · rail | `AppShell`: the single-row header, a sidebar, an icon rail |
+| `container` | narrow · standard · wide · fluid | `pageMax` |
+| `sticky` | header · all · none | `AppShell` (none = the header hides on scroll-down) |
+| `navStyle` | attached · floating | the header and the sidebar inset on a shadow |
+| `panelStyle` | attached · floating | the drawers (phone menu, Customize) |
 
-`public/theme-init.js` applies the saved values before the first paint so a dark-mode person never sees a white flash;
-it carries its own copy of the storage prefix and the allowed values — keep it in step with `CHOICES` in
-`appearance.ts` and `STORAGE_PREFIX` in `src/constants/brand.ts`.
+`web/index.html` reads the saved scheme (`flutter.app.theme`) before Flutter starts and paints the page background,
+so a dark-mode person never sees a white flash; `main()` reads every store before `runApp`.
 
-The React side: `ThemeProvider` (scheme), `FontSizeProvider` (text size), `AppearanceProvider` (the rest). The
-Customize panel (`overlays/CustomizePanel.tsx`) and Settings → General (`modules/settings/GeneralSection.tsx`) both
-draw `AppearanceControls`.
+The Customize panel (`overlays/customize_panel.dart`) and Settings → General (`modules/settings/general_section.dart`)
+both draw `AppearanceControls`.
 
-## Layout (`src/styles/layout.css`)
+## Layout
 
-- `.app-top` holds the header (and, on a phone, the drawer); `.app-frame` / `.app-col` is the sidebar layout.
-- `--page-max` and `--page-pad` size every page's content; `main` in `AppShell` applies them.
-- `.app-side` is the sidebar; `html[data-nav="rail"]` narrows it to icons with tooltips (`.rail-tip`).
-- `.app-offcanvas` is the Customize panel; `.app-nav-drawer` / `.app-nav-scrim` the phone menu.
-- The footer is `.app-footer` with `.ft-*` classes.
-
-The phone layout is decided in `src/lib/layout.ts`: width under 768, or a touch screen as the primary pointer under
-1400 (a tablet in either orientation). `useUi().mobile` is that decision; `narrow` (< 1180) and `tight` (< 900) are
-the desktop breakpoints the header and the Settings window use.
-
-## Components (`src/styles/ui.css`)
-
-The looks of the kit live here by class: `.btn` and its variants and sizes, `.btn-icon`, `.tabs` / `.tab-pill`,
-`.switch`, the Select (`.sel-*`), the pager (`.pager-*`), tables (`.sort-btn`, `.row-click`), the date range, the
-toast stack (`.toast*`), the confirm dialog (`.dz-*`), the error card (`.err-*`), the skeleton shimmer, the option
-cards of Customize (`.opt-*`). A component sets layout inline (width, gap) and leaves colour and state to the class.
+- `AppShell` (`lib/layouts/app_shell.dart`): the status bar, the header (or the sidebar + header), the page, the
+  footer; the phone menu is the start drawer, Customize the end drawer. Ctrl-K opens the palette, Ctrl-, Settings.
+- A page returns `ShellPage(child: PageBody(children: [...]))`: `ShellPage` is the scroll view with the footer at the
+  end, `PageBody` the padding and the page width. `Cols` puts panels side by side on a desktop and stacks them on a
+  phone; `TileGrid` lays stat tiles out four / two / one across.
+- The phone layout is decided by width (`Breakpoints.mobile` = 768); `narrow` (< 1180) and `tight` (< 900) are the
+  desktop breakpoints the header and the Settings window use. `context.isMobile`, `isTight`, `isNarrow`.
 
 ## The colour-scheme switch
 
-`ThemeProvider.setPref(pref, origin)` swaps `data-theme` on `<html>`. Given an `origin` (the pressed button, from
-`clickOrigin(e)`), the new look is painted inside a circle that grows out of that point until it covers the window:
-`document.startViewTransition` snapshots the page, the tokens swap inside the callback, and the `::view-transition-new(root)`
-pseudo-element is animated with a `clip-path: circle()`; `global.css` turns the default cross-fade off. Browsers without
-the API, and people who chose reduced motion, get the plain swap.
+`ThemeStore.setPref(pref, origin: …)` swaps the scheme. Given an origin (the pressed button's centre, from
+`originOf(context)`), `ThemeReveal` (`overlays/theme_reveal.dart`) captures the old frame as an image, swaps the theme
+underneath, and clips a growing hole out of the old picture until it is gone (520 ms). Reduced motion, or no origin,
+means a plain swap.
 
 ## Before sign-in
 
-`modules/landing` is the page at `/` for a visitor: `landing.css` holds its own classes (`.lp-*`, the `.rv` scroll
-reveal, `.tilt`), `Mini.tsx` the CSS illustrations, all on the tokens. The sign-in page has two layouts chosen by
-`BRAND.loginLayout` (`.auth-split` / `.auth-panel` for the brand panel, `.auth-page` for the centred card, both in
-`global.css`); `BRAND.stats` are the numbers on the panel and in the hero.
+`modules/landing` is the page at `/` for a visitor: `Reveal` fades sections in as they scroll into view, `Tilt` lifts
+a card toward the pointer, `mini.dart` draws the small illustrations with widgets, all on the tokens. The sign-in page
+has two layouts chosen by `Brand.loginLayout` (a dark brand panel beside the card, or the card alone); `Brand.stats`
+are the numbers on the panel and in the landing hero.
 
 ## Fonts
 
-Inter + Noto Sans Thai are bundled and loaded in `src/main.tsx`; IBM Plex Sans Thai and Sarabun are separate chunks
-fetched only when picked (`src/lib/fonts.ts`). Nothing comes from Google Fonts: a PC with no internet must not stall.
+Inter + Noto Sans Thai are bundled through `pubspec.yaml` and load with the app; IBM Plex Sans Thai and Sarabun sit
+in `assets/fonts/lazy` and are registered by `ensureFont` only when picked. Nothing comes from Google Fonts at run
+time: a PC with no internet must not stall. The files carry the Thai and Latin subsets (OFL).
 
 ## Brand
 
-`src/constants/brand.ts` holds the name, the wordmark, the company, the tagline, the storage and event prefixes, the
-default language and the default page size. `src/components/ui/AppLogo.tsx` draws the mark (replace `LOGO_MARK` with
-your path on a 1000×1000 view box) and `public/favicon.svg` repeats it for the browser tab and the manifest.
+`lib/constants/brand.dart` holds the name, the wordmark, the company, the tagline, the sign-in layout, the storage
+prefix, the default language and the default page size. `lib/components/ui/app_logo.dart` draws the mark
+(`LogoPainter`, a 100×100 canvas); `web/favicon.svg` and the PNGs in `web/icons` repeat it for the browser tab and the
+manifest.
