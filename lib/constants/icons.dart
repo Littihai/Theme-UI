@@ -105,7 +105,11 @@ enum AppIcon {
   textSize(Icons.format_size),
   phone(Icons.phone_outlined),
   wifiOff(Icons.wifi_off),
-  cloudOff(Icons.cloud_off_outlined);
+  cloudOff(Icons.cloud_off_outlined),
+  // screen width: normal, medium, full
+  fitScreen(Icons.fit_screen_outlined),
+  aspectRatio(Icons.aspect_ratio),
+  fullscreen(Icons.fullscreen);
 
   const AppIcon(this.data);
   final IconData data;

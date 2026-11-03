@@ -50,6 +50,7 @@ class AppHeader extends StatelessWidget {
         IconBtn(icon: AppIcon.search, label: context.t('header.search'), onPressed: shell.openPalette),
       if (!mobile) ...[
         const SizedBox(width: 2),
+        const ScreenWidthToggle(),
         const LangToggle(),
         const ThemeToggle(),
       ],

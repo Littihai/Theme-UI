@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:theme_ui/layouts/public_frame.dart';
 import 'package:theme_ui/theme/appearance.dart';
 import 'package:theme_ui/theme/theme_store.dart';
 import 'package:theme_ui/theme/tokens.dart';
@@ -21,6 +22,13 @@ void main() {
     await store.reset();
     expect(prefs.get('accent'), isNull);
     expect(store.state.isCustomised, isFalse);
+  });
+
+  test('the screen-width toggle cycles normal → medium → full → normal', () {
+    expect(ScreenWidthToggle.next(PageWidth.standard), PageWidth.wide);
+    expect(ScreenWidthToggle.next(PageWidth.wide), PageWidth.fluid);
+    expect(ScreenWidthToggle.next(PageWidth.fluid), PageWidth.standard);
+    expect(ScreenWidthToggle.next(PageWidth.narrow), PageWidth.standard);
   });
 
   test('an unknown stored value falls back to the default', () async {
