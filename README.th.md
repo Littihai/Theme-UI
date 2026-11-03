@@ -4,6 +4,8 @@ Theme page สำหรับ Flutter: เปลือกแอป, design token
 
 ดูตัวอย่าง: https://littihai.github.io/Theme-UI/ · English: [README.md](README.md)
 
+[![หน้า Landing ของตัวอย่างสด](docs/screenshot-landing.png)](https://littihai.github.io/Theme-UI/)
+
 ```powershell
 flutter pub get
 flutter run -d chrome        # บัญชีตัวอย่าง admin / demo, staff / demo
